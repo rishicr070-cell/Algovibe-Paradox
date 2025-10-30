@@ -3,23 +3,19 @@ class PancakeStack {
     constructor() {
         this.stack = [];
     }
-
     add(size) {
         this.stack.push(size);
     }
-
     serve() {
         if (this.stack.length === 0) {
             return -1;
         }
         return this.stack.pop();
     }
-
     asArray() {
         return [...this.stack];
     }
 }
-
 // Basic pancake visualization
 function drawPancakeStack(pancakes) {
     const canvas = document.getElementById('pancakeCanvas');
@@ -28,7 +24,7 @@ function drawPancakeStack(pancakes) {
     const centerX = canvas.width / 2;
     const baseY = canvas.height - 20;
     const pancakeHeight = 20;
-    pancakes.slice().reverse().forEach((size, idx) => {
+    pancakes.forEach((size, idx) => {
         const y = baseY - idx * (pancakeHeight + 2);
         ctx.beginPath();
         ctx.ellipse(centerX, y, size * 2, pancakeHeight / 2, 0, 0, Math.PI * 2);
@@ -42,7 +38,6 @@ function drawPancakeStack(pancakes) {
         ctx.fillText(size, centerX - 8, y + 4);
     });
 }
-
 // Handler for running commands AND visualizing each step
 function runCommands() {
     const commandsInput = document.getElementById('commands').value.trim();
@@ -51,12 +46,10 @@ function runCommands() {
         drawPancakeStack([]);
         return;
     }
-
     const commands = commandsInput.split('\n').map(cmd => cmd.trim()).filter(cmd => cmd);
     const stack = new PancakeStack();
     const results = [];
-    let visualSteps = [];
-
+    let visualSteps = []
     // Precompute steps for animation
     commands.forEach(command => {
         if (command.startsWith('ADD')) {
@@ -71,12 +64,10 @@ function runCommands() {
             results.push(stack.stack.length ? stack.stack[stack.stack.length] : -1);
         }
     });
-
     // Output
     document.getElementById('output').textContent = results.length > 0
         ? results.join(', ')
         : "No SERVE commands executed.";
-
     // Animate stack steps
     let i = 0;
     function animateStack() {
@@ -90,13 +81,11 @@ function runCommands() {
     }
     animateStack();
 }
-
 function resetStack() {
     document.getElementById('commands').value = '';
     document.getElementById('output').textContent = '';
     drawPancakeStack([]);
 }
-
 // Draw empty stack at load
 window.onload = function() {
     drawPancakeStack([]);
