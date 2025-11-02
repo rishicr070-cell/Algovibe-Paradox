@@ -1,0 +1,178 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: url('pekkawithpancake.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: #4A90E2;
+    text-align: center;
+    position: relative;
+}
+
+h1 {
+    margin-top: 32px;
+    color: #4A90E2;
+    letter-spacing: 2px;
+    text-shadow: 
+        0 0 10px rgba(139, 0, 255, 0.8),
+        0 0 20px rgba(139, 0, 255, 0.6),
+        0 0 30px rgba(139, 0, 255, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    color: #4A90E2;
+    text-shadow: 
+        0 0 8px rgba(139, 0, 255, 0.7),
+        0 0 16px rgba(139, 0, 255, 0.5),
+        0 0 24px rgba(139, 0, 255, 0.3),
+        1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+p {
+    color: #4A90E2;
+    text-shadow: 
+        0 0 6px rgba(139, 0, 255, 0.6),
+        0 0 12px rgba(139, 0, 255, 0.4),
+        0 0 18px rgba(139, 0, 255, 0.2),
+        1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+textarea#commands {
+    width: 20%;
+    min-height: 80px;
+    resize: vertical;
+    border: 2px solid #f8b500;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    margin: 10px auto 16px 5%;
+    background: rgba(255, 251, 231, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 8px rgba(248, 181, 0, 0.3);
+    display: block;
+    color: #4A90E2;
+    text-shadow: 
+        0 0 4px rgba(139, 0, 255, 0.5),
+        0 0 8px rgba(139, 0, 255, 0.3);
+    position: relative;
+    z-index: 5;
+}
+
+button {
+    background-color: #000000;
+    color: #4A90E2;
+    border: 1px solid #8B00FF;
+    border-radius: 12px;
+    padding: 12px 28px;
+    margin: 6px 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 0 10px rgba(139, 0, 255, 0.5),
+        0 0 20px rgba(139, 0, 255, 0.3),
+        0 4px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+}
+
+button:hover {
+    background-color: #1a1a1a;
+    color: #5BA3F5;
+    box-shadow: 
+        0 0 20px rgba(139, 0, 255, 0.8),
+        0 0 40px rgba(139, 0, 255, 0.5),
+        0 6px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    text-shadow: 0 0 12px rgba(91, 163, 245, 0.8);
+}
+
+button:active {
+    transform: translateY(0px);
+    box-shadow: 
+        0 0 15px rgba(139, 0, 255, 0.6),
+        0 0 30px rgba(139, 0, 255, 0.4),
+        0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+#output {
+    min-height: 40px;
+    margin: 18px auto 10px auto;
+    padding: 12px;
+    background: rgba(255, 249, 229, 0.3);
+    backdrop-filter: blur(5px);
+    border: 1.5px solid #f8b500;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    width: 60%;
+    box-shadow: 0 1px 6px rgba(248, 181, 0, 0.3);
+    white-space: pre-line;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+    padding-left: 20px;
+    color: #4A90E2;
+    text-shadow: 
+        0 0 4px rgba(139, 0, 255, 0.5),
+        0 0 8px rgba(139, 0, 255, 0.3);
+}
+
+canvas#pancakeCanvas {
+    margin: 20px auto 30px auto;
+    display: block;
+    background: rgba(255, 251, 231, 0.3);
+    backdrop-filter: blur(5px);
+    border: 2px dashed #f8b500;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(248, 181, 0, 0.3);
+}
+
+#pancakeStackContainer {
+    margin: 20px auto;
+    padding: 20px;
+    min-height: 150px;
+}
+
+.stacked-pancake {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    z-index: 1;
+}
+
+.pancake-wrapper {
+    z-index: 1;
+}
+
+.pancake-wrapper:first-child {
+    z-index: 100;
+}
+
+.pancake-size-label {
+    z-index: 2;
+}
+
+#instructions {
+    position: relative;
+    left: 5%;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(139, 0, 255, 0.5);
+    box-shadow: 
+        0 0 10px rgba(139, 0, 255, 0.3),
+        0 4px 15px rgba(0, 0, 0, 0.5);
+    max-width: 250px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 10px 0 10px 5%;
+    z-index: 10;
+    display: block;
+}
+
