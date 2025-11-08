@@ -2,53 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PEKKA's Pancake Stack Challenge</title>
+    <title>PEKKA's Pancake Stack Challenge - Home</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .home-container h1 {
+            margin-bottom: 40px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .home-container button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            margin: 0 20px;
+        }
+        #falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .falling-image {
+            position: absolute;
+            top: -100px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(0vh);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>PEKKA's Pancake Stack Challenge</h1>
-    
-    <!-- Stack Counter -->
-    <div id="stackCounter" style="font-size: 1.2rem; margin: 10px; color: #4A90E2; text-shadow: 0 0 8px rgba(139, 0, 255, 0.6);">
-        Stack Size: <span id="stackSize">0</span> pancakes
-    </div>
-    
-    <div style="position: relative; width: 100%; min-height: 200px;">
-        <p id="instructions" style="color: #4A90E2; margin: 10px; text-shadow: none;">First line: N (number of commands)<br>Next N lines: ADD s or SERVE<br>OR just click the Add Pancake button</p>
-        <textarea id="commands" placeholder="Example:&#10;5&#10;ADD 10&#10;ADD 20&#10;SERVE&#10;ADD 15&#10;SERVE"></textarea>
-    </div>
-    <br>
-    <button onclick="runCommands()">Run</button>
-    <button onclick="addPancakeDirectly()">Add Pancake</button>
-    <button id="serveButton" onclick="serveOnePancake()">Serve</button>
-    <button onclick="resetStack()">Reset</button>
-    <h2>Output</h2>
-    <div id="output"></div>
-    <h2>Visualization</h2>
-    <div class="visualization-container">
-        <div class="viz-section">
-            <h3 class="viz-label">Stack Visualization</h3>
-            <div style="position: relative; display: inline-block;">
-                <canvas id="pancakeCanvas" width="500" height="400"></canvas>
-                <canvas id="miniPEKKACanvas" width="500" height="400" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
-                <div id="pancakeStackContainer" style="position: absolute; top: 0px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: none; width: 500px; height: 360px; overflow: hidden;"></div>
-            </div>
-        </div>
-        <div class="viz-section">
-            <h3 class="viz-label">PEKKA Eating</h3>
-            <div style="position: relative; display: inline-block;">
-                <video id="pekkaEatingVideo" width="500" height="400" style="background-color: #000; border: 2px solid #4A90E2; border-radius: 8px;">
-                    <source src="minipekkaeating.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+    <div id="falling-container"></div>
+    <div class="home-container">
+        <h1>PEKKA's Pancake Stack Challenge</h1>
+        <div class="button-container">
+            <button onclick="location.href='#'">Problem Statement</button>
+            <button onclick="location.href='visualizer.html'">Feed Minipekka</button>
         </div>
     </div>
-    
-    <!-- Toast Notification Container -->
-    <div id="toastContainer"></div>
-    
-    <audio id="pekkaSound" src="minipekkasound.mp3" preload="auto"></audio>
-    <script src="script.js"></script>
+
+    <script>
+        const container = document.getElementById('falling-container');
+        const imageUrl = 'images and video/minipekkadrop.png';
+        const numberOfImages = 20;
+
+        for (let i = 0; i < numberOfImages; i++) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.className = 'falling-image';
+            
+            const size = Math.random() * 50 + 20; // Random size between 20px and 70px
+            img.style.width = size + 'px';
+            img.style.height = 'auto';
+            
+            img.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            
+            const animationDuration = Math.random() * 5 + 5; // Random duration between 5s and 10s
+            img.style.animationDuration = animationDuration + 's';
+            
+            const animationDelay = Math.random() * 5; // Random delay
+            img.style.animationDelay = animationDelay + 's';
+            
+            container.appendChild(img);
+        }
+    </script>
 </body>
 </html>

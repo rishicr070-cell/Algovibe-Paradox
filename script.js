@@ -67,7 +67,7 @@ function loadPancakeImage() {
             drawPancakeStack(globalStack.asArray(), false, null);
         }
     };
-    img.src = 'pancake.png';
+    img.src = 'images and video/pancake.png';
 }
 
 // Add pancake image to DOM stack with drop animation
@@ -82,7 +82,7 @@ function addPancakeImage(size) {
     const startY = -100; // Start from above the container
     
     const pancakeImg = document.createElement('img');
-    pancakeImg.src = 'pancake.png';
+    pancakeImg.src = 'images and video/pancake.png';
     pancakeImg.alt = `Pancake size ${size}`;
     pancakeImg.className = 'stacked-pancake';
     pancakeImg.style.width = `${Math.max(80, size * 5)}px`;
@@ -564,8 +564,8 @@ function addPancakeDirectly() {
     let pancakeSize;
     
     if (currentStackArray.length === 0) {
-        // If stack is empty, start with a random size between 10 and 20
-        pancakeSize = Math.floor(Math.random() * 11) + 10;
+        // If stack is empty, start with a size of 25
+        pancakeSize = 25;
     } else {
         // Get the last (top) pancake size
         const lastPancakeSize = currentStackArray[currentStackArray.length - 1];
@@ -596,9 +596,12 @@ function serveOnePancake() {
     
     const served = globalStack.serve();
     
-    // Play the video when serving
+    const pekkaSadImage = document.getElementById('pekkaSadImage');
     const video = document.getElementById('pekkaEatingVideo');
-    if (video) {
+
+    if (video && pekkaSadImage) {
+        pekkaSadImage.style.display = 'none';
+        video.style.display = 'block';
         video.currentTime = 0; // Reset to start
         video.play().catch(err => console.log('Video play failed:', err));
     }
@@ -656,6 +659,13 @@ function resetStack() {
         currentAnimationFrame = null;
     }
     
+    const pekkaSadImage = document.getElementById('pekkaSadImage');
+    const video = document.getElementById('pekkaEatingVideo');
+    if (video && pekkaSadImage) {
+        pekkaSadImage.style.display = 'block';
+        video.style.display = 'none';
+    }
+
     // Update counter and show toast
     updateStackCounter();
     showToast('Stack Reset!', 'info');
@@ -670,4 +680,13 @@ window.addEventListener('DOMContentLoaded', () => {
     drawPancakeStack([], false, null);
     drawReceivingPEKKA(false);
     updateStackCounter(); // Initialize counter
+
+    const video = document.getElementById('pekkaEatingVideo');
+    const pekkaSadImage = document.getElementById('pekkaSadImage');
+    if (video && pekkaSadImage) {
+        video.addEventListener('ended', () => {
+            video.style.display = 'none';
+            pekkaSadImage.style.display = 'block';
+        });
+    }
 });
