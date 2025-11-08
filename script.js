@@ -30,6 +30,33 @@ let serveOutputResults = []; // Track served pancakes for output
 let pancakeImage = null; // Loaded pancake image for canvas
 let pancakeImageElements = []; // Array to track DOM pancake image elements
 
+// Toast notification function
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Update stack counter
+function updateStackCounter() {
+    const stackSize = globalStack.asArray().length;
+    document.getElementById('stackSize').textContent = stackSize;
+    
+    // Update serve button state
+    const serveButton = document.getElementById('serveButton');
+    if (stackSize === 0) {
+        serveButton.disabled = true;
+    } else {
+        serveButton.disabled = false;
+    }
+}
+
 // Load pancake image for canvas
 function loadPancakeImage() {
     const img = new Image();
@@ -553,6 +580,10 @@ function addPancakeDirectly() {
     // Update visualization
     drawPancakeStack(globalStack.asArray(), false, null);
     drawReceivingPEKKA(false);
+    
+    // Update counter and show toast
+    updateStackCounter();
+    showToast(`Pancake Added! Size: ${pancakeSize}`, 'success');
 }
 
 // Serve one pancake interactively
@@ -572,6 +603,13 @@ function serveOnePancake() {
         video.play().catch(err => console.log('Video play failed:', err));
     }
     
+    // Play the sound when serving
+    const sound = document.getElementById('pekkaSound');
+    if (sound) {
+        sound.currentTime = 0; // Reset to start
+        sound.play().catch(err => console.log('Sound play failed:', err));
+    }
+    
     if (served === -1) {
         // Empty stack
         document.getElementById('output').textContent = serveOutputResults.length > 0
@@ -579,6 +617,7 @@ function serveOnePancake() {
             : '-1';
         drawPancakeStack([], false, null);
         drawReceivingPEKKA(false);
+        showToast('Stack is Empty!', 'error');
     } else {
         // Add to output results
         serveOutputResults.push(served);
@@ -589,6 +628,8 @@ function serveOnePancake() {
         drawPancakeStack(stackBeforeServe, true, null);
         drawReceivingPEKKA(false);
         
+        showToast(`Pancake Served! Size: ${served}`, 'success');
+        
         // Animate the serving
         setTimeout(() => {
             animateServing(served, globalStack.asArray(), () => {
@@ -596,6 +637,9 @@ function serveOnePancake() {
             });
         }, 400);
     }
+    
+    // Update counter
+    updateStackCounter();
 }
 
 function resetStack() {
@@ -611,6 +655,10 @@ function resetStack() {
         cancelAnimationFrame(currentAnimationFrame);
         currentAnimationFrame = null;
     }
+    
+    // Update counter and show toast
+    updateStackCounter();
+    showToast('Stack Reset!', 'info');
 }
 
 // Initialize visualization on page load
@@ -621,4 +669,5 @@ window.addEventListener('DOMContentLoaded', () => {
     loadPancakeImage(); // Load pancake image for canvas
     drawPancakeStack([], false, null);
     drawReceivingPEKKA(false);
+    updateStackCounter(); // Initialize counter
 });
